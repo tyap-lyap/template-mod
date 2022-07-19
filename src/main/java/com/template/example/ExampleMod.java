@@ -8,19 +8,19 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class ExampleMod implements ModInitializer {
-    public static final String MOD_ID = "modid";
-    public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
+	public static final String MOD_ID = "modid";
+	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
-    @Override
-    public void onInitialize() {
-        //Example code, you can remove it
-        FabricLoader.getInstance().getModContainer(MOD_ID).ifPresent(mod -> {
-            ModMetadata meta = mod.getMetadata();
-            LOGGER.info(meta.getName() + " " + meta.getVersion().getFriendlyString() + " is successfully initialized!");
-        });
-    }
+	@Override
+	public void onInitialize() {
+		//Example code, you can remove it
+		FabricLoader.getInstance().getModContainer(MOD_ID).ifPresent(mod -> {
+			ModMetadata meta = mod.getMetadata();
+			LOGGER.info(meta.getName() + " " + meta.getVersion().getFriendlyString() + " is successfully initialized!");
+		});
+	}
 
-    public static Identifier id(String path) {
-        return new Identifier(MOD_ID, path);
-    }
+	public static Identifier id(String path) {
+		return new Identifier(MOD_ID, path);
+	}
 }

@@ -2,7 +2,6 @@
   "schemaVersion": 1,
   "id": "modid",
   "version": "${version}",
-
   "name": "Example Mod",
   "description": "This is an example description! Tell everyone what your mod is about!",
   "authors": [
@@ -16,16 +15,18 @@
     "sources": "https://github.com/tyap-lyap/template-mod",
     "issues": "https://github.com/tyap-lyap/template-mod/issues"
   },
-
   "license": "MIT",
   "icon": "assets/modid/icon.png",
 
   "environment": "*",
   "entrypoints": {
-    "main": ["com.template.example.ExampleMod"]
+    "main": [
+      "com.template.example.ExampleMod"
+    ]
   },
-  "mixins": ["modid.mixins.json"],
-
+  "mixins": [
+    "modid.mixins.json"
+  ],
   "depends": {
     "fabricloader": "*",
     "fabric": "*",
