@@ -5,10 +5,7 @@
   "name": "Example Mod",
   "description": "This is an example description! Tell everyone what your mod is about!",
   "authors": [
-    "me!"
-  ],
-  "contributors": [
-    "they!"
+    "me"
   ],
   "contact": {
     "homepage": "https://modrinth.com/mod/template-mod",
@@ -17,11 +14,10 @@
   },
   "license": "MIT",
   "icon": "assets/modid/icon.png",
-
   "environment": "*",
   "entrypoints": {
     "main": [
-      "com.template.example.ExampleMod"
+      "example.Mod"
     ]
   },
   "mixins": [
@@ -29,7 +25,7 @@
   ],
   "depends": {
     "fabricloader": "*",
-    "fabric": "*",
+	"fabric-api": "*",
     "minecraft": ">=1.19",
     "java": ">=17"
   }
