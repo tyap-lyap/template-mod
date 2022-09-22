@@ -16,7 +16,7 @@ public class ExampleMod implements ModInitializer {
 		//Example code, you can remove it
 		FabricLoader.getInstance().getModContainer(MOD_ID).ifPresent(mod -> {
 			ModMetadata meta = mod.getMetadata();
-			LOGGER.info(meta.getName() + " " + meta.getVersion().getFriendlyString() + " is successfully initialized!");
+			LOGGER.info(meta.getName() + " " + meta.getVersion().getFriendlyString() + " got successfully initialized!");
 		});
 	}
 
