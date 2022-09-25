@@ -10,8 +10,6 @@ import io.github.coolcrabs.brachyura.minecraft.VersionMeta;
 import io.github.coolcrabs.brachyura.quilt.QuiltMaven;
 import net.fabricmc.mappingio.tree.MappingTree;
 
-import java.nio.file.Path;
-
 public class Buildscript extends SimpleFabricProject {
 
 	@Override
@@ -68,11 +66,6 @@ public class Buildscript extends SimpleFabricProject {
 	@Override
 	public BrachyuraDecompiler decompiler() {
 		return new FernflowerDecompiler(Maven.getMavenJarDep(QuiltMaven.URL, new MavenId("org.quiltmc", "quiltflower", Properties.QUILTFLOWER)));
-	}
-
-	@Override
-	public Path getBuildJarPath() {
-		return getBuildLibsDir().resolve(getModId() + "-" + getVersion() + ".jar");
 	}
 
 }
