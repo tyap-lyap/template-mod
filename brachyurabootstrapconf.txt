@@ -37,3 +37,7 @@ https://maven.fabricmc.net/net/fabricmc/tiny-remapper/0.8.2/tiny-remapper-0.8.2.
 https://maven.fabricmc.net/net/fabricmc/tiny-remapper/0.8.2/tiny-remapper-0.8.2-sources.jar	bb9487ede138747fd2685556f60ca2100d78e203	tiny-remapper-0.8.2-sources.jar	false
 https://maven.fabricmc.net/net/fabricmc/mapping-io/0.3.0/mapping-io-0.3.0.jar	f7c41de27b01e622ba85f72794012bf7447e4156	mapping-io-0.3.0.jar	true
 https://maven.fabricmc.net/net/fabricmc/mapping-io/0.3.0/mapping-io-0.3.0-sources.jar	7002ec63184af7dfa48b68595be6388bc847f5b6	mapping-io-0.3.0-sources.jar	false
+https://repo1.maven.org/maven2/org/apache/maven/maven-model/3.8.6/maven-model-3.8.6.jar	8ad31867c493c63ac60a3fa42356a72d20f8457b	maven-model-3.8.6.jar	true
+https://repo1.maven.org/maven2/org/apache/maven/maven-model/3.8.6/maven-model-3.8.6-sources.jar	3f2471220d4a7124aee2bbe9ff801b83c4c32ef6	maven-model-3.8.6-sources.jar	false
+https://repo1.maven.org/maven2/org/codehaus/plexus/plexus-utils/3.5.0/plexus-utils-3.5.0.jar	ff9f0881396a06b31ff548048256e9a7c8f1207a	plexus-utils-3.5.0.jar	true
+https://repo1.maven.org/maven2/org/codehaus/plexus/plexus-utils/3.5.0/plexus-utils-3.5.0-sources.jar	3dea705bdf7a667bc72b982cab5c32610fc1774a	plexus-utils-3.5.0-sources.jar	false

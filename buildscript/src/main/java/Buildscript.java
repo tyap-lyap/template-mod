@@ -10,6 +10,14 @@ import io.github.coolcrabs.brachyura.minecraft.VersionMeta;
 import io.github.coolcrabs.brachyura.quilt.QuiltMaven;
 import io.github.coolcrabs.brachyura.processing.ProcessorChain;
 import net.fabricmc.mappingio.tree.MappingTree;
+import org.apache.maven.model.Model;
+import org.apache.maven.model.io.xpp3.MavenXpp3Reader;
+
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Buildscript extends SimpleFabricProject {
 
@@ -40,23 +48,56 @@ public class Buildscript extends SimpleFabricProject {
 
 	@Override
 	public void getModDependencies(ModDependencyCollector d) {
-		d.addMaven(FabricMaven.URL, new MavenId(FabricMaven.GROUP_ID + ".fabric-api", "fabric-api-base", "0.4.11+e62f51a390"), ModDependencyFlag.RUNTIME, ModDependencyFlag.COMPILE);
-		d.addMaven(FabricMaven.URL, new MavenId(FabricMaven.GROUP_ID + ".fabric-api", "fabric-command-api-v2", "2.1.7+0c17ea9690"), ModDependencyFlag.RUNTIME, ModDependencyFlag.COMPILE);
-		d.addMaven(FabricMaven.URL, new MavenId(FabricMaven.GROUP_ID + ".fabric-api", "fabric-convention-tags-v1", "1.1.1+7cd20a1490"), ModDependencyFlag.RUNTIME, ModDependencyFlag.COMPILE);
-		d.addMaven(FabricMaven.URL, new MavenId(FabricMaven.GROUP_ID + ".fabric-api", "fabric-crash-report-info-v1", "0.2.5+aeb40ebe90"), ModDependencyFlag.RUNTIME, ModDependencyFlag.COMPILE);
-		d.addMaven(FabricMaven.URL, new MavenId(FabricMaven.GROUP_ID + ".fabric-api", "fabric-dimensions-v1", "2.1.30+aeb40ebe90"), ModDependencyFlag.RUNTIME, ModDependencyFlag.COMPILE);
-		d.addMaven(FabricMaven.URL, new MavenId(FabricMaven.GROUP_ID + ".fabric-api", "fabric-entity-events-v1", "1.4.18+9ff28f4090"), ModDependencyFlag.RUNTIME, ModDependencyFlag.COMPILE);
-		d.addMaven(FabricMaven.URL, new MavenId(FabricMaven.GROUP_ID + ".fabric-api", "fabric-events-interaction-v0", "0.4.28+aeb40ebe90"), ModDependencyFlag.RUNTIME, ModDependencyFlag.COMPILE);
-		d.addMaven(FabricMaven.URL, new MavenId(FabricMaven.GROUP_ID + ".fabric-api", "fabric-game-rule-api-v1", "1.0.21+aeb40ebe90"), ModDependencyFlag.RUNTIME, ModDependencyFlag.COMPILE);
-		d.addMaven(FabricMaven.URL, new MavenId(FabricMaven.GROUP_ID + ".fabric-api", "fabric-lifecycle-events-v1", "2.1.2+aeb40ebe90"), ModDependencyFlag.RUNTIME, ModDependencyFlag.COMPILE);
-		d.addMaven(FabricMaven.URL, new MavenId(FabricMaven.GROUP_ID + ".fabric-api", "fabric-message-api-v1", "5.0.3+176380a290"), ModDependencyFlag.RUNTIME, ModDependencyFlag.COMPILE);
-		d.addMaven(FabricMaven.URL, new MavenId(FabricMaven.GROUP_ID + ".fabric-api", "fabric-networking-api-v1", "1.2.4+5eb68ef290"), ModDependencyFlag.RUNTIME, ModDependencyFlag.COMPILE);
-		d.addMaven(FabricMaven.URL, new MavenId(FabricMaven.GROUP_ID + ".fabric-api", "fabric-resource-loader-v0", "0.6.1+aeb40ebe90"), ModDependencyFlag.RUNTIME, ModDependencyFlag.COMPILE);
+		
+		addFabricModules(d, new String[] {
+				"fabric-api-base",
+				"fabric-command-api-v2",
+				"fabric-convention-tags-v1",
+				"fabric-resource-loader-v0",
+				"fabric-crash-report-info-v1",
+				"fabric-dimensions-v1",
+				"fabric-entity-events-v1",
+				"fabric-events-interaction-v0",
+				"fabric-game-rule-api-v1",
+				"fabric-lifecycle-events-v1",
+				"fabric-message-api-v1",
+				"fabric-registry-sync-v0",
+				"fabric-screen-api-v1",
+				"fabric-key-binding-api-v1",
+				"fabric-networking-api-v1"
+		});
 
 		d.addMaven("https://api.modrinth.com/maven/", new MavenId("maven.modrinth", "lazydfu", Properties.LAZY_DFU), ModDependencyFlag.RUNTIME);
 		d.addMaven("https://api.modrinth.com/maven/", new MavenId("maven.modrinth", "ferrite-core", "5.0.0-fabric"), ModDependencyFlag.RUNTIME);
 		d.addMaven("https://api.modrinth.com/maven/", new MavenId("maven.modrinth", "starlight", "1.1.1+1.19"), ModDependencyFlag.RUNTIME);
-		d.addMaven("https://api.modrinth.com/maven/", new MavenId("maven.modrinth", "lithium", "mc1.19.2-0.8.3"), ModDependencyFlag.RUNTIME);
+		d.addMaven("https://api.modrinth.com/maven/", new MavenId("maven.modrinth", "lithium", "mc1.19.2-0.10.1"), ModDependencyFlag.RUNTIME);
+	}
+	
+	public static void addFabricModules(ModDependencyCollector d, String[] modules) {
+		d.addMaven(FabricMaven.URL, new MavenId(FabricMaven.GROUP_ID + ".fabric-api", "fabric-api", Properties.FABRIC_API), ModDependencyFlag.RUNTIME, ModDependencyFlag.COMPILE);
+		try {
+			String temp = "https://maven.fabricmc.net/net/fabricmc/fabric-api/fabric-api/%version%/fabric-api-%version%.pom";
+			String pom = temp.replaceAll("%version%", Properties.FABRIC_API);
+			URL url = new URL(pom);
+			URLConnection request = url.openConnection();
+			request.connect();
+			InputStreamReader isReader = new InputStreamReader(request.getInputStream());
+			MavenXpp3Reader reader = new MavenXpp3Reader();
+			Model model = reader.read(isReader);
+			ArrayList<String> mods = new ArrayList<>(List.of(modules));
+
+			model.getDependencies().forEach(dependency -> {
+				var id = dependency.getArtifactId();
+				var ver = dependency.getVersion();
+				if(mods.contains(id)) {
+					d.addMaven(FabricMaven.URL, new MavenId(FabricMaven.GROUP_ID + ".fabric-api", id, ver), ModDependencyFlag.RUNTIME, ModDependencyFlag.COMPILE);
+				}
+			});
+
+		}
+		catch(Exception e) {
+			System.out.println("Failed to add fabric modules due to an exception:\n" + e);
+		}
 	}
 
 	@Override
