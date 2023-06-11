@@ -57,7 +57,7 @@ public class Buildscript extends SimpleFabricProject {
 
 	public void addFabricModules(ModDependencyCollector mdc) {
 		String fabricApi = this.getProperties().getProperty("fabricApi");
-		d.addMaven(FabricMaven.URL, new MavenId(FabricMaven.GROUP_ID + ".fabric-api", "fabric-api", fabricApi), RUNTIME, COMPILE);
+		mdc.addMaven(FabricMaven.URL, new MavenId(FabricMaven.GROUP_ID + ".fabric-api", "fabric-api", fabricApi), RUNTIME, COMPILE);
 		try {
 			String temp = "https://maven.fabricmc.net/net/fabricmc/fabric-api/fabric-api/%version%/fabric-api-%version%.pom";
 			String pom = temp.replaceAll("%version%", fabricApi);
