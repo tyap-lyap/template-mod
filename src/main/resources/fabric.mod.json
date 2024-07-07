@@ -4,12 +4,7 @@
   "version": "${version}",
   "name": "Example Mod",
   "description": "This is an example description! Tell everyone what your mod is about!",
-  "authors": [
-    "me!"
-  ],
-  "contributors": [
-    "they!"
-  ],
+  "authors": [ "me!" ],
   "contact": {
     "homepage": "https://modrinth.com/mod/template-mod",
     "sources": "https://github.com/tyap-lyap/template-mod",
@@ -20,17 +15,13 @@
 
   "environment": "*",
   "entrypoints": {
-    "main": [
-      "com.template.example.ExampleMod"
-    ]
+    "main": [ "com.template.example.ExampleMod" ]
   },
-  "mixins": [
-    "modid.mixins.json"
-  ],
+  "mixins": [ "modid.mixins.json" ],
   "depends": {
     "fabricloader": "*",
-    "fabric": "*",
-    "minecraft": ">=1.20",
-    "java": ">=17"
+    "fabric-api": "*",
+    "minecraft": ">=1.21",
+    "java": ">=21"
   }
 }
