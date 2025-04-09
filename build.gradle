@@ -1,9 +1,12 @@
 plugins {
-	id "fabric-loom" version "1.7-SNAPSHOT"
+	id "fabric-loom" version "1.10-SNAPSHOT"
 }
 
 version = project.mod_version
 group = project.maven_group
+base {
+	archivesName = project.archives_base_name
+}
 
 repositories {
 }
@@ -14,10 +17,6 @@ dependencies {
 
 	modImplementation "net.fabricmc:fabric-loader:${project.fabric_loader}"
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api}"
-}
-
-base {
-	archivesName = project.archives_base_name
 }
 
 processResources {
@@ -39,7 +38,9 @@ java {
 }
 
 jar {
+	inputs.property "archivesName", project.base.archivesName
+
 	from("LICENSE") {
-		rename { "${it}_${project.base.archivesName.get()}"}
+		rename { "${it}_${inputs.properties.archivesName}"}
 	}
 }
